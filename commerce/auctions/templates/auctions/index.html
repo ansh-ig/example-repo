@@ -2,6 +2,31 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+<div class="row mx-3">
+    {% for listing in listings %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{ listing.imageurl}}" alt="{{ listing.tittle }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ listing.tittle }}</h5>
+                <p class="card-text description-text">{{ listing.description | truncatechars:75 }}</p>
+                <a href="#" class="btn btn-primary"> Bid </a>
+                <a href="#" class="btn btn-primary read-more-btn">Read more</a>
+                <div class="full-description d-none">{{ listing.description }}</div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 
-    TODO
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var readMoreBtns = document.querySelectorAll('.read-more-btn');
+        readMoreBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('d-none');
+                this.previousElementSibling.classList.toggle('d-none');
+                this.nextElementSibling.classList.toggle('d-none');
+            });
+        });
+    });
+</script>
 {% endblock %}

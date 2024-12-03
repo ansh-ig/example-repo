@@ -8,7 +8,10 @@ from .models import User, Category, Listing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    activeListings = Listing.objects.filter (isActive=True)
+    return render(request, "auctions/index.html", {
+        "listings": activeListings
+    })
 
 def createListing(request):
     if request.method == "GET":
@@ -29,10 +32,10 @@ def createListing(request):
         category_data = Category.objects.get(categoryName = category)
         #  create a new listing
         newListing = Listing(
-            title=title,
+            tittle=title,
             description=description,
             imageurl=imageurl,
-            price=price,
+            price=float(price),
             category=category_data,
             owner = usernow
             )
