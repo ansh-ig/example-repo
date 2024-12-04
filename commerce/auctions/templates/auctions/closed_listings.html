@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Closed Listings</h2>
+
+    {% if closed_listings %}
+        <div class="row">
+            {% for listing in closed_listings %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ listing.imageurl }}" class="card-img-top" alt="{{ listing.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ listing.title }}</h5>
+                            <p class="card-text">{{ listing.description }}</p>
+                            <p class="card-text">Lowest Bid: ${{ listing.price.bid }}</p>
+                            <p class="card-text">Owner: {{ listing.owner }}</p>
+                            {% if request.user == listing.price.user %}
+                                <div class="alert alert-success" role="alert">
+                                    Congratulations! You won the Auction!
+                                </div>
+                            {% endif %}
+                            <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">View Listing</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>There are no closed listings at the moment.</p>
+    {% endif %}
+{% endblock %}
